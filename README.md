@@ -1,2 +1,2 @@
-# FreeImageOpenGL
-Using [FreeImage](http://freeimage.sourceforge.net) library to load/import textures into openGL.
+# FreeImage & OpenGL
+A simple Qt project in which uses a [FreeImage](http://freeimage.sourceforge.net) wrapper to seamlessly load images/textures into OpenGL.
