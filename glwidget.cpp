@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <QFileDialog>
+#include <QMessageBox>
 
 #include "screenquad.h"
 #include "utils.h"
@@ -45,7 +46,8 @@ void GLWidget::loadImageFromPath(const QString &path)
     }
     else
     {
-        std::cout << "Can't load this file" << std::endl; //Popup
+        QMessageBox::information(this, tr("Error"), "Image " + path + "\n Could not be loaded.");
+        std::cout << "Can't load "+path.toStdString() << std::endl;
     }
 }
 
