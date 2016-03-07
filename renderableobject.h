@@ -1,7 +1,7 @@
 #ifndef RENDERABLEOBJECT_H
 #define RENDERABLEOBJECT_H
 
-#include <GL/glew.h>
+#include <glad/glad.h>
 #include <glm/glm.hpp>
 
 class RenderableObject

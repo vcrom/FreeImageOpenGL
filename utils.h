@@ -6,7 +6,7 @@
 #endif
 
 #ifndef GL_CHECK_ERRORS_PRINT
-    #define GL_CHECK_ERRORS_PRINT {GLenum err; while ((err = glGetError()) != GL_NO_ERROR) {std::cerr << "OpenGL error: " << err << std::endl;}}
+    #define GL_CHECK_ERRORS_PRINT {GLenum err; while ((err = glGetError()) != GL_NO_ERROR) {std::cerr << "OpenGL error: " << err << std::endl; std::getchar()}}
 #endif
 
 

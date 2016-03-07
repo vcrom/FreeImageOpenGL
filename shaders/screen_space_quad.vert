@@ -1,6 +1,7 @@
 #version 330 core
 
 layout(location=0) in vec2 vVertex;
+
 smooth out vec2 vUV;
 
 void main()

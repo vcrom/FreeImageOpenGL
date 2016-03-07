@@ -9,14 +9,13 @@
 class ScreenQuad : public RenderableObject
 {
 public:
-	static ScreenQuad& getInstance();
-	static std::shared_ptr<ScreenQuad> getInstanceP();
+    static std::shared_ptr<ScreenQuad> getInstance();
 	~ScreenQuad();
 
 protected:
 	//void destroy();
 
-	unsigned int getTotalVertices();
+    unsigned int getTotalVertices();
 	unsigned int getTotalIndices();
 	GLenum getPrimitiveType();
 	unsigned int sizeOfVertexElement();
@@ -29,9 +28,8 @@ private:
 	ScreenQuad(ScreenQuad const&) = delete;
 	void operator=(ScreenQuad const&) = delete;
 
-	static const std::vector<glm::vec2> vertices_;
-	static const std::vector<unsigned int> indices_;
-	static ScreenQuad* instance_;
+    static const std::vector<glm::vec2> _vertices;
+    static const std::vector<unsigned int> _indices;
 };
 
 #endif // SCREENQUAD_H

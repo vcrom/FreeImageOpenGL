@@ -13,6 +13,7 @@ public:
 
     virtual void loadImage(const void* buffer, unsigned int width, unsigned int height, unsigned int bpp) = 0;
     virtual void loadImage(const std::string& path) = 0;
+    virtual bool isLoaded() = 0;
     virtual void writeImage(const std::string& path) = 0;
     virtual unsigned int getHeight() = 0;
     virtual unsigned int getWidth() = 0;

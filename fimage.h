@@ -5,7 +5,7 @@
 #include <FreeImage\FreeImagePlus.h>
 #include <glad/glad.h>
 
-#define THREADED_IMAGE_SAVER
+#define THREADED_IMAGE_WRITE
 
 class fImage : public Image
 {
@@ -15,6 +15,7 @@ public:
 
     void loadImage(const void* buffer, unsigned int width, unsigned int height, unsigned int bpp = 24);
     void loadImage(const std::string& path);
+    bool isLoaded();
     void writeImage(const std::string& path);
     unsigned int getHeight();
     unsigned int getWidth();
@@ -24,12 +25,9 @@ public:
     GLint getOpenGLImageInternalFormat();
     void flipDiagonal();
 
-protected:
-    fipImage _image;
-    void loadFromPath(const std::string& path);
-    void writeImageToPath(const std::string& path);
-
 private:
+    fipImage _image;
+    bool _loaded;
 };
 
 #endif // FIMAGE_H

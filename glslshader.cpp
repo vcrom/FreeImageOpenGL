@@ -1,7 +1,8 @@
 #include "glslshader.h"
 #include <iostream>
+#include <cassert>
 #include <glm/gtc/type_ptr.hpp>
-
+#include "utils.h"
 GlslShader::GlslShader(void)
 {
 	_totalShaders = 0;
@@ -24,13 +25,12 @@ void GlslShader::deleteShaderProgram() {
 	_uniformLocationList.clear();
 }
 
-#include <assert.h>
 void GlslShader::loadFromString(GLenum type, const std::string& source)
 {
-	GLuint shader = glCreateShader(type);
+    GLuint shader = glCreateShader(type);
 
 	const char * ptmp = source.c_str();
-	glShaderSource(shader, 1, &ptmp, NULL);
+    glShaderSource(shader, 1, &ptmp, NULL);
 
 	//check whether the shader loads fine
 	GLint status;
@@ -57,9 +57,8 @@ void GlslShader::loadFromString(GLenum type, const std::string& source)
 		case GL_GEOMETRY_SHADER:
 			_shaders[GEOMETRY_SHADER] = shader;
 			break;
-		default:
-			assert(false);
-			break;
+        default:
+            assert(false);
 	}
 }
 
@@ -68,18 +67,18 @@ void GlslShader::createAndLinkProgram()
 {
 	_program = glCreateProgram();
 	if (_shaders[VERTEX_SHADER] != 0) {
-		glAttachShader(_program, _shaders[VERTEX_SHADER]);
+        glAttachShader(_program, _shaders[VERTEX_SHADER]);
 	}
 	if (_shaders[FRAGMENT_SHADER] != 0) {
-		glAttachShader(_program, _shaders[FRAGMENT_SHADER]);
+        glAttachShader(_program, _shaders[FRAGMENT_SHADER]);
 	}
 	if (_shaders[GEOMETRY_SHADER] != 0) {
-		glAttachShader(_program, _shaders[GEOMETRY_SHADER]);
+        glAttachShader(_program, _shaders[GEOMETRY_SHADER]);
 	}
 
 	//link and check whether the program links fine
 	GLint status;
-	glLinkProgram(_program);
+    glLinkProgram(_program);
 	glGetProgramiv(_program, GL_LINK_STATUS, &status);
 	if (status == GL_FALSE) {
 		GLint infoLogLength;
@@ -176,7 +175,7 @@ void GlslShader::setUniform(const std::string& uniform, const Mat4x4 &val)
 #include <fstream>
 void GlslShader::loadFromFile(GLenum whichShader, const  std::string& filename){
 	std::ifstream fp;
-	fp.open(filename.c_str(), std::ios_base::in);
+    fp.open(filename, std::ios_base::in);
 	if (fp) {
 		std::string line, buffer;
 		while (std::getline(fp, line)) {

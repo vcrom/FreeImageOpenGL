@@ -1,11 +1,10 @@
 #include "screenquad.h"
 
-const std::vector<glm::vec2> ScreenQuad::vertices_ = { glm::vec2(0.0, 0.0), glm::vec2(1.0, 0.0), glm::vec2(1.0, 1.0), glm::vec2(0.0, 1.0) };
-const std::vector<unsigned int> ScreenQuad::indices_ = { 0, 1, 2, 0, 2, 3 };
+const std::vector<glm::vec2> ScreenQuad::_vertices = { glm::vec2(0.0, 0.0), glm::vec2(1.0, 0.0), glm::vec2(1.0, 1.0), glm::vec2(0.0, 1.0) };
+const std::vector<unsigned int> ScreenQuad::_indices = { 0, 1, 2, 0, 2, 3 };
 
-ScreenQuad* ScreenQuad::instance_ = nullptr;
 
-std::shared_ptr<ScreenQuad> ScreenQuad::getInstanceP()
+std::shared_ptr<ScreenQuad> ScreenQuad::getInstance()
 {
 	static auto instance = std::shared_ptr<ScreenQuad>(new ScreenQuad());
 	return instance;
@@ -19,18 +18,16 @@ ScreenQuad::ScreenQuad()
 
 ScreenQuad::~ScreenQuad()
 {
-	delete instance_;
-	instance_ = nullptr;
 }
 
 unsigned int ScreenQuad::getTotalVertices()
 {
-	return vertices_.size();
+    return static_cast<unsigned int>(_vertices.size());
 }
 
 unsigned int ScreenQuad::getTotalIndices()
 {
-	return indices_.size();
+    return static_cast<unsigned int>(_indices.size());
 }
 
 GLenum ScreenQuad::getPrimitiveType()
@@ -51,13 +48,13 @@ unsigned int ScreenQuad::vertexNumberOfComponents()
 void ScreenQuad::fillVertexBuffer(GLfloat* pBuffer)
 {
 	glm::vec2* vert = (glm::vec2*)(pBuffer);
-	for (unsigned int i = 0; i < totalVertices_; ++i)
-		vert[i] = vertices_[i];
+    for (unsigned int i = 0; i < getTotalVertices(); ++i)
+        vert[i] = _vertices[i];
 }
 
 void ScreenQuad::fillIndexBuffer(GLuint* pBuffer)
 {
 	int* idx = (int*)(pBuffer);
-	for (unsigned int i = 0; i < totalIndices_; ++i)
-		idx[i] = indices_[i];
+    for (unsigned int i = 0; i < getTotalIndices(); ++i)
+        idx[i] = _indices[i];
 }

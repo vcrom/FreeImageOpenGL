@@ -10,7 +10,7 @@
 fImage::fImage()
     : Image()
 {
-
+    _loaded = false;
 }
 
 fImage::~fImage()
@@ -39,18 +39,8 @@ void fImage::writeImage(const std::string& path)
     std::thread saver(writeImageToPathT, _image, path);
     saver.detach();
 #else
-    writeImageToPath(path);
+    writeImageToPathT(_image, path);
 #endif
-}
-
-void fImage::writeImageToPath(const std::string& path)
-{
-    auto b = _image.save(path.c_str());
-    if (!b)
-    {
-        std::cerr << "FAILED TO SAVE" << std::endl;
-        //throw_non_critical("FAILED TO SAVE");
-    }
 }
 
 unsigned int fImage::getHeight()
@@ -77,35 +67,33 @@ void  fImage::loadImage(const void* buffer, unsigned int width, unsigned int hei
 
 void  fImage::loadImage(const std::string& path)
 {
-    loadFromPath(path);
-    //bool load = _image.convertTo24Bits();
-    //bool load = _image.convertToType(FIT_BITMAP);
-
-}
-
-void fImage::loadFromPath(const std::string& path)
-{
     if (!_image.load(path.c_str()))
     {
         std::cerr << "Can not load the image " + path << std::endl;
         //throw_non_critical("Can not load the image " + path);
-        assert(false);
+        //assert(false);
     }
     else
     {
         //_image.flipVertical();
+        _loaded = true;
     }
+
+}
+
+bool fImage::isLoaded()
+{
+    return _loaded;
 }
 
 GLint fImage::getOpenGLFormat()
 {
-    return GL_RGB;
+    return GL_BGR;
 }
 
 GLint fImage::getOpenGLImageType()
 {
     return GL_UNSIGNED_BYTE;
-
 }
 
 GLint fImage::getOpenGLImageInternalFormat()

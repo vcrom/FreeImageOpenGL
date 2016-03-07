@@ -44,13 +44,6 @@
         </property>
        </widget>
       </item>
-      <item>
-       <widget class="QPushButton" name="pushButton_2">
-        <property name="text">
-         <string>Save Image</string>
-        </property>
-       </widget>
-      </item>
      </layout>
     </item>
    </layout>
@@ -81,8 +74,45 @@
    <class>GLWidget</class>
    <extends>QOpenGLWidget</extends>
    <header>glwidget.h</header>
+   <slots>
+    <signal>imageLoaded(QString)</signal>
+    <slot>loadImage()</slot>
+   </slots>
   </customwidget>
  </customwidgets>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>pushButton</sender>
+   <signal>pressed()</signal>
+   <receiver>openGLWidget</receiver>
+   <slot>loadImage()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>595</x>
+     <y>307</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>548</x>
+     <y>305</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>openGLWidget</sender>
+   <signal>imageLoaded(QString)</signal>
+   <receiver>statusBar</receiver>
+   <slot>showMessage(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>232</x>
+     <y>524</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>233</x>
+     <y>591</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>
