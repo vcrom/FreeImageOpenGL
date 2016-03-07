@@ -5,6 +5,8 @@
 #include <FreeImage\FreeImagePlus.h>
 #include <glad/glad.h>
 
+#define THREADED_IMAGE_SAVER
+
 class fImage : public Image
 {
 public:
@@ -28,7 +30,6 @@ protected:
     void writeImageToPath(const std::string& path);
 
 private:
-    #define THREADED
 };
 
 #endif // FIMAGE_H

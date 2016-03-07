@@ -8,7 +8,7 @@
 class Image
 {
 public:
-    Image()=default;
+    Image()= default;
     ~Image() = default;
 
     virtual void loadImage(const void* buffer, unsigned int width, unsigned int height, unsigned int bpp) = 0;
@@ -17,7 +17,6 @@ public:
     virtual unsigned int getHeight() = 0;
     virtual unsigned int getWidth() = 0;
     virtual unsigned char* getImageData() = 0;
-
 };
 
 #endif // IMAGE_H

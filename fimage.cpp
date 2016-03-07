@@ -20,22 +20,20 @@ fImage::~fImage()
 
 void writeImageToPathT(const fipImage& image, const std::string& path)
 {
-    std::chrono::time_point<std::chrono::high_resolution_clock> start, end;
-    start = std::chrono::high_resolution_clock::now();
-    bool saved = image.save(path.c_str());
-    end = std::chrono::high_resolution_clock::now();
-    std::chrono::duration<double, std::milli> elapsed_mseconds = end - start;
+    auto start = std::chrono::high_resolution_clock::now();
+    auto saved = image.save(path.c_str());
+    auto end = std::chrono::high_resolution_clock::now();
+    auto elapsed_mseconds = static_cast<std::chrono::duration<double, std::milli>> (end - start);
     std::cout << "IMAGE time writing the image: " << elapsed_mseconds.count() << std::endl;
     if (!saved)
     {
         std::cerr << "FAILED TO SAVE" << std::endl;
-        //throw_non_critical("FAILED TO SAVE");
     }
 }
 
 void fImage::writeImage(const std::string& path)
 {
-#ifdef THREADED
+#ifdef THREADED_IMAGE_WRITE
     //std::thread t1;
     //if(t1.joinable()) t1.join();
     std::thread saver(writeImageToPathT, _image, path);
@@ -47,7 +45,7 @@ void fImage::writeImage(const std::string& path)
 
 void fImage::writeImageToPath(const std::string& path)
 {
-    bool b = _image.save(path.c_str());
+    auto b = _image.save(path.c_str());
     if (!b)
     {
         std::cerr << "FAILED TO SAVE" << std::endl;
@@ -87,8 +85,7 @@ void  fImage::loadImage(const std::string& path)
 
 void fImage::loadFromPath(const std::string& path)
 {
-    bool loaded = _image.load(path.c_str());
-    if (!loaded)
+    if (!_image.load(path.c_str()))
     {
         std::cerr << "Can not load the image " + path << std::endl;
         //throw_non_critical("Can not load the image " + path);
