@@ -44,11 +44,7 @@ void GLWidget::loadImageFromPath(const QString &path)
 #endif
         emit imageLoaded(aux.at(aux.length()-1));
     }
-    else
-    {
-        QMessageBox::information(this, tr("Error"), "Image " + path + "\n Could not be loaded.");
-        std::cout << "Can't load "+path.toStdString() << std::endl;
-    }
+    else QMessageBox::information(this, tr("Error"), "Image " + path + "\n Can not be loaded.");
 }
 
 void GLWidget::initializeGL()
