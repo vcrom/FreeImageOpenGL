@@ -20,7 +20,7 @@ GLWidget::~GLWidget()
 
 void GLWidget::loadImage()
 {
-    QString filename = QFileDialog::getOpenFileName(this, tr("Open Image"), "./", tr("All files (*)"));
+    QString filename = QFileDialog::getOpenFileName(this, tr("Open Image"), "./images/", tr("All files (*)"));
     loadImageFromPath(filename);
 }
 
@@ -42,6 +42,10 @@ void GLWidget::loadImageFromPath(const QString &path)
         auto aux = path.split("/");
 #endif
         emit imageLoaded(aux.at(aux.length()-1));
+    }
+    else
+    {
+        std::cout << "Can't load this file" << std::endl; //Popup
     }
 }
 

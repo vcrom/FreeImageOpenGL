@@ -88,6 +88,7 @@ bool fImage::isLoaded()
 
 GLint fImage::getOpenGLFormat()
 {
+    //get from image properties
     return GL_BGR;
 }
 
@@ -98,7 +99,7 @@ GLint fImage::getOpenGLImageType()
 
 GLint fImage::getOpenGLImageInternalFormat()
 {
-    return GL_RGB8;
+    return GL_RGB;
 }
 
 void fImage::flipDiagonal()
