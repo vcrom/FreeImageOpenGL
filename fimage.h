@@ -13,7 +13,7 @@ public:
     fImage();
     ~fImage();
 
-    void loadImage(const void* buffer, unsigned int width, unsigned int height, unsigned int bpp = 24);
+    void loadImage(const void* buffer, unsigned int width, unsigned int height, unsigned int bpp = 32); //default RGBA 8-bits per channel
     void loadImage(const std::string& path);
     bool isLoaded();
     void writeImage(const std::string& path);
@@ -24,8 +24,13 @@ public:
     GLint getOpenGLImageType();
     GLint getOpenGLImageInternalFormat();
     void flipDiagonal();
+    std::size_t getBitsPerChannel();
+    std::size_t getBitsPerPixel();
+
 
 private:
+    void printImageInfo();
+
     fipImage _image;
     bool _loaded;
 };

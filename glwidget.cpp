@@ -22,7 +22,7 @@ GLWidget::~GLWidget()
 void GLWidget::loadImage()
 {
     QString filename = QFileDialog::getOpenFileName(this, tr("Open Image"), "./images/", tr("All files (*)"));
-    loadImageFromPath(filename);
+    if(filename.length() > 0) loadImageFromPath(filename);
 }
 
 void GLWidget::loadImageFromPath(const QString &path)
@@ -31,17 +31,12 @@ void GLWidget::loadImageFromPath(const QString &path)
     image.loadImage(path.toStdString());
     if(image.isLoaded())
     {
-        std::cout << "Image loaded" << std::endl;
         glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D, _texture_id);
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, image.getWidth(), image.getHeight(), 0, image.getOpenGLFormat(), image.getOpenGLImageType(), image.getImageData());
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, image.getWidth(), image.getHeight(), 0, image.getOpenGLFormat(), image.getOpenGLImageType(), image.getImageData());
         checkOpenGLError();
         update();
-#ifdef Q_OS_WIN32
-        auto aux = path.split("\\");
-#elif Q_OS_LINUX
         auto aux = path.split("/");
-#endif
         emit imageLoaded(aux.at(aux.length()-1));
     }
     else QMessageBox::information(this, tr("Error"), "Image " + path + "\n Can not be loaded.");
@@ -59,13 +54,15 @@ void GLWidget::initializeGL()
 
     //Init shader
     _shader = std::shared_ptr<GlslShader>(new GlslShader());
-#ifdef Q_OS_WIN32
-    _shader->loadFromFile(GL_VERTEX_SHADER, "shaders\\screen_space_quad.vert");
-    _shader->loadFromFile(GL_FRAGMENT_SHADER, "shaders\\screen_space_quad.frag");
-#elif Q_OS_LINUX
     _shader->loadFromFile(GL_VERTEX_SHADER, "shaders/screen_space_quad.vert");
     _shader->loadFromFile(GL_FRAGMENT_SHADER, "shaders/screen_space_quad.frag");
-#endif
+//#ifdef Q_OS_WIN32
+//    _shader->loadFromFile(GL_VERTEX_SHADER, "shaders\\screen_space_quad.vert");
+//    _shader->loadFromFile(GL_FRAGMENT_SHADER, "shaders\\screen_space_quad.frag");
+//#elif Q_OS_LINUX
+//    _shader->loadFromFile(GL_VERTEX_SHADER, "shaders/screen_space_quad.vert");
+//    _shader->loadFromFile(GL_FRAGMENT_SHADER, "shaders/screen_space_quad.frag");
+//#endif
     _shader->createAndLinkProgram();
     _shader->use();
     _shader->addAttribute("vVertex");
@@ -85,11 +82,7 @@ void GLWidget::initializeGL()
     checkOpenGLError();
 
     //load example image
-#ifdef Q_OS_WIN32
-    loadImageFromPath("images\\img1.jpg");
-#elif Q_OS_LINUX
     loadImageFromPath("images/img1.jpg");
-#endif
 }
 
 void GLWidget::resizeGL(int w, int h)
