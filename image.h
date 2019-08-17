@@ -9,7 +9,7 @@ class Image
 {
 public:
     Image()= default;
-    ~Image() = default;
+    virtual ~Image() = default;
 
     virtual void loadImage(const void* buffer, unsigned int width, unsigned int height, unsigned int bpp) = 0;
     virtual void loadImage(const std::string& path) = 0;
